@@ -11,6 +11,8 @@ export class StatusesComponent implements OnInit {
 
   // Status text
   public statusText: string
+  public userNameText:string = '';//user Name textbox value
+  public userName:string = '';//user Name
 
   // The status available
   public statuses: any[]
@@ -54,7 +56,7 @@ export class StatusesComponent implements OnInit {
 
   postStatus() {
     // this.status.valid(this.statusText) && this.status.post(this.statusText)
-    this.status.insert(this.statusText,'krunal')
+    this.status.insert(this.statusText,this.userName.toLowerCase())
     // .then((res)=>{
     //   if(res != undefined && res['list'] != undefined){
     //     this.statuses = res['list'];
@@ -70,4 +72,9 @@ export class StatusesComponent implements OnInit {
   react(reaction: string, status) {
     this.status.react(reaction, status)
   }
+
+  updateUser(){
+    this.userName = this.userNameText.trim();
+  }
+
 }

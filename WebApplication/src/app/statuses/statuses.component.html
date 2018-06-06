@@ -1,5 +1,5 @@
 <div class="create-status">
-  <form class="clearfix">
+  <form class="clearfix" *ngIf="userName != ''">
     <div class="form-group">
       <textarea class="form-control" rows="3" placeholder="Whats happening?" [(ngModel)]="statusText" (ngModelChange)="typingStatus()" name="statusText"></textarea>
     </div>
@@ -13,6 +13,25 @@
       <button class="btn btn-primary btn-md" [disabled]="canPostStatus != true" (click)="postStatus()">Post</button>
     </div>
   </form>
+  <form class="clearfix" *ngIf="userName == ''">
+    <div class="form-group rows">
+      <div class="col-md-10">
+        <input type="text" class="form-control" placeholder="Your Name" [(ngModel)]="userNameText" name="userNameText" maxlength="10"/>
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-primary btn-md pull-right form-control" (click)="updateUser()">Login</button>
+      </div>
+    </div>
+    <div class="">
+      <span class="countdown">
+        <!-- Show the characters remaining for the status to remain valid -->
+        <!-- <span *ngIf="statusText">{{this.status.maxLength - statusText.length}}</span>
+        <span *ngIf="!statusText">{{this.status.maxLength}}</span> -->
+      </span>
+      <!-- On click of this button, post status -->
+      
+    </div>
+  </form>
 </div>
 <div class="list-statuses clearfix">
   <ul>
@@ -22,12 +41,12 @@
         <img src="https://randomuser.me/api/portraits/men/84.jpg" alt="">
       </div>
       <div class="status">
+        <p style="text-transform: capitalize"><strong>{{status.user_id}}</strong></p>
         <p>{{status.feedPost}}</p>
         <div class="reaction">
           <ul class="list-inline pull-left">
             <!-- On click of any of the reactions, call the react method -->
             <li><a href="#" class="btn btn-sm btn-default" (click)="react('like', status)">Like</a></li>
-            <li><a href="#" class="btn btn-sm btn-default" (click)="react('dislike', status)">Dislike</a></li>
             <li><a href="#" class="btn btn-sm btn-default" (click)="react('love', status)">Love</a></li>
           </ul>
           <!-- <div class="counts pull-right"> -->

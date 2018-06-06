@@ -2,8 +2,8 @@
 
 const express = require('express'),
       router = express.Router(),
-      mongo = require('./apis/mongo');
+      posts = require('./apis/posts');
 
-router.all('/api/feed/*',mongo);
+router.all('/api/feed/*',posts);
 
 module.exports = router;
