@@ -14,6 +14,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { StatusesComponent } from './statuses/statuses.component';
 
 import { StatusesService } from './statuses/statuses.service';
+import { SharedService } from './services/shared/shared.service';
 
 
 export const firebaseConfig = {
@@ -40,7 +41,7 @@ export const firebaseConfig = {
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule
   ],
-  providers: [StatusesService],
+  providers: [StatusesService,SharedService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

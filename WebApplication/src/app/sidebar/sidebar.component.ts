@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { SharedService } from '../services/shared/shared.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-sidebar',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SidebarComponent implements OnInit {
 
-  constructor() { }
+  constructor(private sharedService:SharedService) { }
+
+  private userName:string = '';
+  private userNameSubscription:Subscription;
 
   ngOnInit() {
+    this.userNameSubscription = this.sharedService.userName.subscribe((value)=>{ this.userName = value});
+  }
+
+  public logout(){
+    this.sharedService.setUserName('');
   }
 
 }

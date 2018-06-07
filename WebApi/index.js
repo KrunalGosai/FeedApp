@@ -7,6 +7,7 @@ const app = express();
 const server  = require('http').createServer(app);
 const io = require('socket.io')(server);
 var models = require('./models');
+var fs = require('fs');
 
 
 //CORS middleware
@@ -22,6 +23,7 @@ app.use(function(req, res, next) {
   
 app.use(bodyParser.urlencoded({limit: '50mb',extended: true, parameterLimit:50000}));
 app.use(bodyParser.json({limit: '50mb'}));
+app.use(express.static('public'));
 
 app.all('/api/*',route);
 
@@ -31,7 +33,19 @@ io.on('connection',(socket)=>{
 
   socket.on('newpost', (body) => {
     if(body != undefined && body.user_id != undefined && body.feedPost != undefined){
-      var post = new models.feedPosts({ user_id: body.user_id,feedPost: body.feedPost,postedTime: new Date()})
+      if(body.image64 != undefined && body.image64 != ''){
+      var imgName = (new Date).getTime().toString();
+      imgName = Buffer.from(imgName).toString('base64')+'.jpeg';
+      var img = body.image64.toString();
+      var data = img.replace(/^data:image\/\w+;base64,/, "");
+      var bufferImage = new Buffer(data, 'base64');
+
+      fs.writeFile('./public/images/'+imgName,bufferImage,(err)=>{
+        console.log(err);
+      });
+      console.log('file uploaded');
+      }
+      var post = new models.feedPosts({ user_id: body.user_id,feedPost: body.feedPost,postedTime: new Date(),imgUrl:'/images/'+imgName})
       post.save().then(() => {
           models.feedPosts.find({}).sort({postedTime: 'descending'}).then((resobj) =>{
               io.emit('newpost',{info:'Record inserted successfully!',list:resobj});

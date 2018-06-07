@@ -112,14 +112,14 @@ export class StatusesService {
   // ----------------------------------------------------------------------
   // Method to insert post
   // ----------------------------------------------------------------------
-  insert(post:string,user_id:string){
+  insert(post:string,user_id:string,image64:string){
     // let body = JSON.stringify({"user_id":user_id,"feedPost":post});
     // console.log(body);
     // return this.api.post(environment.serverURL+'/feed/newpost',body,this.httpOptions)
     //   .toPromise()
     //   .then((res)=>{return res || {}})
     //   .catch((err)=>{ console.log(err); return {}})
-    this.socket.emit('newpost',{"user_id":user_id,"feedPost":post});
+    this.socket.emit('newpost',{"user_id":user_id,"feedPost":post,"image64":image64});
   }
 
   public getposts = () => {

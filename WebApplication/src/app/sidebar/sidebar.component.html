@@ -11,11 +11,11 @@
           </div>
         </div>
         <div class="col-xs-8">
-          <span class="name">John Doe</span>
-          <span class="handle">@johndoe</span>
+          <span class="name" style="text-transform: capitalize">{{userName}}</span>
+          <span class="handle" *ngIf="userName != ''" (click)="logout()"><a>Logout</a></span>
         </div>
       </div>
-      <div class="row assets">
+      <div class="row assets" *ngIf="userName != ''">
         <div class="col-xs-6">
           <span class="assets-title">Following</span>
           <span class="assets-count">10</span>
