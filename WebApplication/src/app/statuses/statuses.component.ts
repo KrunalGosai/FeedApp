@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { StatusesService } from './statuses.service';
 import { SharedService } from '../services/shared/shared.service';
-import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-statuses',
@@ -18,7 +17,6 @@ export class StatusesComponent implements OnInit {
   public statusText: string
   public userNameText:string = '';//user Name textbox value
   public userName:string = '';//user Name
-  private userNameSubscription:Subscription; //subscription
   public imageFile64:string= ''; //file 64 base String
   public serverUrl = 'http://localhost:4000';
 
@@ -31,17 +29,16 @@ export class StatusesComponent implements OnInit {
 
   // ngOnInit is automatically fired on intialisation
   ngOnInit() {
-    // Get 50 of the most recent statuses
-    // this.status.recent(50)
+
     this.status.list().subscribe((res) => {
       this.statuses = res['list'];
-      console.log(this.statuses);
     })
 
     this.status.getposts().subscribe((res)=> {
       this.statuses = res;
     })
-    this.userNameSubscription = this.sharedService.userName.subscribe((value)=>{ this.userName = value});
+
+    this.sharedService.userName.subscribe((value)=>{ this.userName = value});
 
   }
 
@@ -52,14 +49,9 @@ export class StatusesComponent implements OnInit {
 
   // Post a status if it is valid
   postStatus() {
-    // this.status.valid(this.statusText) && this.status.post(this.statusText)
     this.status.insert(this.statusText,this.userName.toLowerCase(),this.imageFile64)
-    // .then((res)=>{
-    //   if(res != undefined && res['list'] != undefined){
-    //     this.statuses = res['list'];
-    //   }
     this.statusText = '';
-    // }).catch((err)=>{console.log(err)});
+    this.imageFile64 = '';
   }
 
   // React to an existing post
@@ -84,5 +76,4 @@ export class StatusesComponent implements OnInit {
       this.imageFile64 = '';
     }
   }
-
 }

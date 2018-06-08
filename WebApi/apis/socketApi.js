@@ -9,13 +9,14 @@ var api = function(){};
 server.listen(8080);
 io.on('connection',(socket)=>{
   console.log('a user connected');
-  socket.on('newpost',(body) => { sapi.newPost(body,io)})
+  socket.on('newpost',(body) => { api.newPost(body,io)})
 })
 
-api.prototype.newPost = (body, io) => {
+api.newPost = (body, io) => {
   if ( body != undefined && body.user_id != undefined && body.feedPost != undefined ) {
+    var imgName = '';
     if (body.image64 != undefined && body.image64 != "") {
-      var imgName = new Date().getTime().toString();
+      imgName = new Date().getTime().toString();
       imgName = Buffer.from(imgName).toString("base64") + ".jpeg";
       var img = body.image64.toString();
       var data = img.replace(/^data:image\/\w+;base64,/, "");
@@ -26,7 +27,7 @@ api.prototype.newPost = (body, io) => {
       });
       console.log("file uploaded");
     }
-    var post = new models.feedPosts({ user_id: body.user_id, feedPost: body.feedPost, postedTime: new Date(), imgUrl: "/images/" + imgName });
+    var post = new models.feedPosts({ user_id: body.user_id, feedPost: body.feedPost, postedTime: new Date(), imgUrl: imgName == '' ? '' : "/images/" + imgName });
     post.save().then(
       () => {
         models.feedPosts.find({}).sort({ postedTime: "descending" }).then(resobj => {

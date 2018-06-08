@@ -45,7 +45,7 @@
       <div class="status">
         <p style="text-transform: capitalize"><strong>{{status.user_id}}</strong></p>
         <p>{{status.feedPost}}</p>
-        <img *ngIf="status.imgUrl != undefined && status.imgUrl != ''" width="80%" style="border: 2px solid #00baba" src="{{serverUrl + status.imgUrl}}" alt="image post" >
+        <img *ngIf="status.imgUrl != undefined && status.imgUrl != ''" style="max-width: 80%; border: 2px solid #00baba" src="{{serverUrl + status.imgUrl}}" alt="image post" >
         <!-- <div class="reaction">
           <ul class="list-inline pull-left"> -->
             <!-- On click of any of the reactions, call the react method -->
