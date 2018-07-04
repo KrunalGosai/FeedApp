@@ -1,6 +1,12 @@
 import { Component, OnInit} from '@angular/core';
 import { StatusesService } from './statuses.service';
 import { SharedService } from '../services/shared/shared.service';
+import {
+  AuthService,
+  FacebookLoginProvider,
+  GoogleLoginProvider,
+  LinkedinLoginProvider
+} from 'angular-6-social-login';
 
 @Component({
   selector: 'app-statuses',
@@ -11,14 +17,15 @@ import { SharedService } from '../services/shared/shared.service';
 export class StatusesComponent implements OnInit {
 
   // Class constructor, injects StatusService as this.status
-  constructor(public status: StatusesService,private sharedService:SharedService) { }
+  constructor(public status: StatusesService,private sharedService:SharedService, private socialAuthService: AuthService) { }
     
   // Status text
   public statusText: string
   public userNameText:string = '';//user Name textbox value
-  public userName:string = '';//user Name
+  public userName = '' ;//user Name
   public imageFile64:string= ''; //file 64 base String
   public serverUrl = 'http://localhost:4000';
+  public UserData ;
 
 
   // The status available
@@ -39,7 +46,11 @@ export class StatusesComponent implements OnInit {
     })
 
     this.sharedService.userName.subscribe((value)=>{ this.userName = value});
-
+    if(this.socialAuthService.authState['source']['value'] != null){
+      this.socialAuthService.signOut().then(value => {
+        console.log(value)
+      });
+    }
   }
 
   // Get the status of the text if its valid or nah
@@ -59,6 +70,7 @@ export class StatusesComponent implements OnInit {
     this.status.react(reaction, status)
   }
 
+  //login user
   updateUser(){
     this.sharedService.setUserName(this.userNameText.trim())
     this.userNameText = '';
@@ -75,5 +87,28 @@ export class StatusesComponent implements OnInit {
     }else{
       this.imageFile64 = '';
     }
+  }
+
+  public socialSignIn(socialPlatform : string) {
+    let socialPlatformProvider;
+    if(socialPlatform == "facebook"){
+      socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
+    }
+    else if(socialPlatform == "google"){
+      socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
+    } 
+    else if (socialPlatform == "linkedin") {
+      socialPlatformProvider = LinkedinLoginProvider.PROVIDER_ID;
+    }
+    
+    this.socialAuthService.signIn(socialPlatformProvider).then(
+      (userData) => {
+        console.log(userData);
+        this.UserData = userData;
+        this.userName = userData.name;
+        this.userNameText = userData.name;
+        this.updateUser();
+      }
+    );
   }
 }

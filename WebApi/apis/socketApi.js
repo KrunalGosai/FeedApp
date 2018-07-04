@@ -17,9 +17,10 @@ api.newPost = (body, io) => {
     var imgName = '';
     if (body.image64 != undefined && body.image64 != "") {
       imgName = new Date().getTime().toString();
-      imgName = Buffer.from(imgName).toString("base64") + ".jpeg";
+      imgName = Buffer.from(imgName).toString("base64") + ".jpg";
       var img = body.image64.toString();
       var data = img.replace(/^data:image\/\w+;base64,/, "");
+      data = img.split(',')[1];
       var bufferImage = new Buffer(data, "base64");
 
       fs.writeFile("./public/images/" + imgName, bufferImage, err => {

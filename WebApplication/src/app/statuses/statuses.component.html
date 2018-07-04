@@ -21,8 +21,11 @@
         <input type="text" class="form-control" placeholder="Your Name" [(ngModel)]="userNameText" name="userNameText" maxlength="10"/>
       </div>
       <div class="col-md-2">
-        <button class="btn btn-primary btn-md pull-right form-control" (click)="updateUser()">Login</button>
+          <button class="btn btn-primary btn-sm" style="min-width: 0px;" (click)="socialSignIn('google')"><em class="fa fa-google-plus"></em></button>
+          <!-- <button class="btn btn-primary btn-sm" style="min-width: 0px;" (click)="socialSignIn('facebook')"><em class="fa fa-facebook"></em></button> -->
+          <!-- <button class="btn btn-primary btn-md pull-right form-control" >Login</button> -->
       </div>
+      <!-- </div> -->
     </div>
     <div class="">
       <span class="countdown">
@@ -46,19 +49,19 @@
         <p style="text-transform: capitalize"><strong>{{status.user_id}}</strong></p>
         <p>{{status.feedPost}}</p>
         <img *ngIf="status.imgUrl != undefined && status.imgUrl != ''" style="max-width: 80%; border: 2px solid #00baba" src="{{serverUrl + status.imgUrl}}" alt="image post" >
-        <!-- <div class="reaction">
-          <ul class="list-inline pull-left"> -->
+        <div class="reaction">
+          <!-- <ul class="list-inline pull-left"> -->
             <!-- On click of any of the reactions, call the react method -->
             <!-- <li><a href="#" class="btn btn-sm btn-default" (click)="react('like', status)">Like</a></li>
             <li><a href="#" class="btn btn-sm btn-default" (click)="react('love', status)">Love</a></li>
-          </ul>
-          <div class="counts pull-right"> -->
+          </ul> -->
+          <div class="counts pull-right">
             <!-- Show the reaction counts -->
-            <!-- <span class="thumbs reaction" [hidden]="!status.like || status.like <= 0"><span class="count">{{status.like}}</span> Like</span>
-            <span class="thumbs reaction" [hidden]="!status.dislike || status.dislike <= 0"><span class="count">{{status.dislike}}</span> Dislike</span>
-            <span class="heart reaction" [hidden]="!status.love || status.love <= 0"><span class="count">{{status.love}}</span> Love</span>
+            <!-- <span class="thumbs reaction" [hidden]="!status.postLike || status.postLike.length <= 0"><span class="count">{{status.postLike.length}}</span> Like</span> -->
+            <!-- <span class="thumbs reaction" [hidden]="!status.dislike || status.dislike <= 0"><span class="count">{{status.dislike}}</span> Dislike</span> -->
+            <!-- <span class="heart reaction" [hidden]="!status.postLove || status.postLove.length <= 0"><span class="count">{{status.postLove.length}}</span> Love</span> -->
           </div>
-        </div> -->
+        </div>
       </div>
     </li>
   </ul>

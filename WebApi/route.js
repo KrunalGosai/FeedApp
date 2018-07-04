@@ -5,5 +5,6 @@ const express = require('express'),
       posts = require('./apis/posts');
 
 router.all('/api/feed/*',posts);
+router.all('/api/test',posts);
 
 module.exports = router;

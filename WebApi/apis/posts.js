@@ -1,5 +1,12 @@
 models = require('../models'),
-express = require('express')
+express = require('express'),
+{google} = require('googleapis');
+
+plus = google.plus({
+    version: 'v1',
+    // auth: 'AIzaSyApbHuygOHXtV2AdQwpKrTWpRFxOm6lT10' // specify your API key here
+    auth: 'AIzaSyApbHuygOHXtV2AdQwpKrTWpRFxOm6lT10'
+  });
     router = express.Router();
 
     router.post('/api/feed/newpost',(req,res) => {
@@ -21,15 +28,6 @@ express = require('express')
             res.statusCode = 422 //(Unprocessable Entity)
             res.send('invalid request !')
         }
-    })
-    
-    router.get('/api/feed/list_old',(req,res) => {
-        models.feedPosts.find({}).sort({postedTime: 'descending'}).limit( 10 ).then((resobj) =>{
-            res.send({list:resobj});
-            console.log('list operation completed.')
-        },(err)=>{
-            console.log(err);
-        });
     })
 
     router.get('/api/feed/list',(req,res) => {
@@ -73,6 +71,15 @@ express = require('express')
             } 
             
         ]).then((data) => {res.send({list:data}), console.log('list operation completed.')},(err) => {console.log(err)});
+    })
+
+    router.get('/api/test',(req,res)=>{
+        async function main() {
+            const res = await plus.people.get({ userId: 'me' });
+            console.log(`Hello ${res.data.displayName}!`);
+          };
+          
+        main().catch(console.error);
     })
 
 module.exports = router;
