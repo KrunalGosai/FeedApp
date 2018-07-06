@@ -19,6 +19,7 @@ api.newPost = (body, io) => {
       imgName = new Date().getTime().toString();
       imgName = Buffer.from(imgName).toString("base64") + ".jpg";
       var img = body.image64.toString();
+      var dpUrl = body.dpPic.toString();
       var data = img.replace(/^data:image\/\w+;base64,/, "");
       data = img.split(',')[1];
       var bufferImage = new Buffer(data, "base64");
@@ -28,7 +29,7 @@ api.newPost = (body, io) => {
       });
       console.log("file uploaded");
     }
-    var post = new models.feedPosts({ user_id: body.user_id, feedPost: body.feedPost, postedTime: new Date(), imgUrl: imgName == '' ? '' : "/images/" + imgName });
+    var post = new models.feedPosts({ user_id: body.user_id, feedPost: body.feedPost, postedTime: new Date(),dpUrl: body.dpPic, imgUrl: (imgName == '' ? '' : "/images/" + imgName),});
     post.save().then(
       () => {
         models.feedPosts.find({}).sort({ postedTime: "descending" }).then(resobj => {

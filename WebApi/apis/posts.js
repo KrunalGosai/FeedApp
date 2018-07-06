@@ -52,7 +52,7 @@ plus = google.plus({
             },
             {
                 $project: {
-                    user_id: 1,feedPost:1,postedTime:1,imgUrl:1,_id:1,
+                    user_id: 1,feedPost:1,postedTime:1,imgUrl:1,_id:1,dpUrl:1,
                     postLike: { 
                         $filter: { 
                             input: "$postLike", 

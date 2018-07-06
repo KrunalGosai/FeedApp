@@ -86,8 +86,8 @@ export class StatusesService {
   }
 
   // Method to insert post
-  insert(post:string,user_id:string,image64:string){
-    this.socket.emit('newpost',{"user_id":user_id,"feedPost":post,"image64":image64});
+  insert(post:string,user_id:string,image64:string,profilePic:any){
+    this.socket.emit('newpost',{"user_id":user_id,"feedPost":post,"image64":image64,"dpPic":profilePic});
   }
 
   public getposts = () => {

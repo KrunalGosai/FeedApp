@@ -21,12 +21,9 @@ export class StatusesComponent implements OnInit {
     
   // Status text
   public statusText: string
-  public userNameText:string = '';//user Name textbox value
   public userName = '' ;//user Name
   public imageFile64:string= ''; //file 64 base String
-  public serverUrl = 'http://localhost:4000';
-  public UserData ;
-
+  public userProfilePic:String = '';
 
   // The status available
   public statuses: any[]
@@ -46,11 +43,12 @@ export class StatusesComponent implements OnInit {
     })
 
     this.sharedService.userName.subscribe((value)=>{ this.userName = value});
-    if(this.socialAuthService.authState['source']['value'] != null){
-      this.socialAuthService.signOut().then(value => {
-        console.log(value)
-      });
-    }
+    // if(this.socialAuthService.authState['source']['value'] != null){
+    //   this.socialAuthService.signOut().then(value => {
+    //     console.log(value)
+    //   });
+    // }
+    this.sharedService.profilePic.subscribe(value=>{this.userProfilePic = value});
   }
 
   // Get the status of the text if its valid or nah
@@ -60,7 +58,7 @@ export class StatusesComponent implements OnInit {
 
   // Post a status if it is valid
   postStatus() {
-    this.status.insert(this.statusText,this.userName.toLowerCase(),this.imageFile64)
+    this.status.insert(this.statusText,this.userName.toLowerCase(),this.imageFile64,this.userProfilePic);
     this.statusText = '';
     this.imageFile64 = '';
   }
@@ -68,12 +66,6 @@ export class StatusesComponent implements OnInit {
   // React to an existing post
   react(reaction: string, status) {
     this.status.react(reaction, status)
-  }
-
-  //login user
-  updateUser(){
-    this.sharedService.setUserName(this.userNameText.trim())
-    this.userNameText = '';
   }
 
   onFileChange(event) {
@@ -88,27 +80,8 @@ export class StatusesComponent implements OnInit {
       this.imageFile64 = '';
     }
   }
-
+  
   public socialSignIn(socialPlatform : string) {
-    let socialPlatformProvider;
-    if(socialPlatform == "facebook"){
-      socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
-    }
-    else if(socialPlatform == "google"){
-      socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
-    } 
-    else if (socialPlatform == "linkedin") {
-      socialPlatformProvider = LinkedinLoginProvider.PROVIDER_ID;
-    }
-    
-    this.socialAuthService.signIn(socialPlatformProvider).then(
-      (userData) => {
-        console.log(userData);
-        this.UserData = userData;
-        this.userName = userData.name;
-        this.userNameText = userData.name;
-        this.updateUser();
-      }
-    );
+    this.sharedService.LoginWith(socialPlatform);
   }
 }

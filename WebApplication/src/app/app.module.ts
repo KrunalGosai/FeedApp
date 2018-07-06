@@ -17,20 +17,21 @@ import { SharedService } from './services/shared/shared.service';
 import {
   SocialLoginModule,
   AuthServiceConfig,
+  FacebookLoginProvider,
   GoogleLoginProvider
 } from "angular-6-social-login";
 // Configs 
 export function getAuthServiceConfigs() {
 let  config = new AuthServiceConfig(
       [
-        // {
-        //   id: FacebookLoginProvider.PROVIDER_ID,
-	      // provider: new FacebookLoginProvider("Your-Facebook-app-id")
-        // },
+        {
+          id: FacebookLoginProvider.PROVIDER_ID,
+	        provider: new FacebookLoginProvider("1614205742041575")
+        },
         {
           id: GoogleLoginProvider.PROVIDER_ID,
-	      provider: new GoogleLoginProvider("341543928717-lkud8ljns0q811enoh4fieroriu07qfi.apps.googleusercontent.com")//AIzaSyCAd-hlV4mEsMJS079bIe4Vo2gQPH1DGig
-        },
+	        provider: new GoogleLoginProvider("341543928717-lkud8ljns0q811enoh4fieroriu07qfi.apps.googleusercontent.com")//AIzaSyCAd-hlV4mEsMJS079bIe4Vo2gQPH1DGig
+        }
       ]);
       return config;
     }

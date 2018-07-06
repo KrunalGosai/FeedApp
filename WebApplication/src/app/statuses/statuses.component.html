@@ -22,7 +22,7 @@
       </div>
       <div class="col-md-2">
           <button class="btn btn-primary btn-sm" style="min-width: 0px;" (click)="socialSignIn('google')"><em class="fa fa-google-plus"></em></button>
-          <!-- <button class="btn btn-primary btn-sm" style="min-width: 0px;" (click)="socialSignIn('facebook')"><em class="fa fa-facebook"></em></button> -->
+          <button class="btn btn-primary btn-sm" style="min-width: 0px;" (click)="socialSignIn('facebook')"><em class="fa fa-facebook"></em></button>
           <!-- <button class="btn btn-primary btn-md pull-right form-control" >Login</button> -->
       </div>
       <!-- </div> -->
@@ -43,7 +43,8 @@
     <!-- Loop through the statuses and display them -->
     <li *ngFor="let status of statuses">
       <div class="photo">
-        <img src="https://randomuser.me/api/portraits/men/84.jpg" alt="">
+        <img *ngIf="status.dpUrl == '' || status.dpUrl == undefined" src="https://randomuser.me/api/portraits/men/84.jpg" alt="">
+        <img *ngIf="status.dpUrl != ''" [src]="status.dpUrl" alt="">
       </div>
       <div class="status">
         <p style="text-transform: capitalize"><strong>{{status.user_id}}</strong></p>
