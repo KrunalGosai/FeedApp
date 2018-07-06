@@ -44,12 +44,9 @@ export class SharedService {
   }
 
   LogOut(){
-    if(this.loginProvider != '')
-    {
       this.socialAuthService.signOut().then(res =>{console.log(res)}).catch(err => console.log(err));
       this.userName.next('');
       this.profilePic.next('');
-    }else this.loginProvider = '';
   }
 
 }
