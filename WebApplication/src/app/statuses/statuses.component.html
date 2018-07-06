@@ -17,10 +17,11 @@
   </form>
   <form class="clearfix" *ngIf="userName == ''">
     <div class="form-group rows">
-      <div class="col-md-10">
+      <!-- <div class="col-md-10">
         <input type="text" class="form-control" placeholder="Your Name" [(ngModel)]="userNameText" name="userNameText" maxlength="10"/>
-      </div>
-      <div class="col-md-2">
+      </div> -->
+      <div class="col-md-2">Login With : </div>
+      <div class="col-md-10">
           <button class="btn btn-primary btn-sm" style="min-width: 0px;" (click)="socialSignIn('google')"><em class="fa fa-google-plus"></em></button>
           <button class="btn btn-primary btn-sm" style="min-width: 0px;" (click)="socialSignIn('facebook')"><em class="fa fa-facebook"></em></button>
           <!-- <button class="btn btn-primary btn-md pull-right form-control" >Login</button> -->
