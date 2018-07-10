@@ -7,6 +7,7 @@ import {
   GoogleLoginProvider,
   LinkedinLoginProvider
 } from 'angular-6-social-login';
+declare var FB:any;
 
 @Component({
   selector: 'app-statuses',
@@ -15,7 +16,7 @@ import {
 })
 
 export class StatusesComponent implements OnInit {
-
+  
   // Class constructor, injects StatusService as this.status
   constructor(public status: StatusesService,private sharedService:SharedService, private socialAuthService: AuthService) { }
     
@@ -24,6 +25,7 @@ export class StatusesComponent implements OnInit {
   public userName = '' ;//user Name
   public imageFile64:string= ''; //file 64 base String
   public userProfilePic:String = '';
+  serverUrl = 'http://localhost:4000/'
 
   // The status available
   public statuses: any[]
@@ -83,5 +85,34 @@ export class StatusesComponent implements OnInit {
   
   public socialSignIn(socialPlatform : string) {
     this.sharedService.LoginWith(socialPlatform);
+  }
+
+  loginFB(){
+    var that = this;
+    FB.login(function(response) {
+      if (response.authResponse) {
+       console.log('Welcome!  Fetching your information.... ');
+       console.log(response) 
+       FB.api('/me', function(response) {
+         console.log('Good to see you, ' + response.name + '.',response);
+         that.postOnFB();
+       });
+      } else {
+       console.log('User cancelled login or did not fully authorize.');
+      }
+    },{scope: 'email,publish_pages,manage_pages'});
+  }
+
+  postOnFB(){
+    var body = 'Reading JS SDK documentation';
+    FB.api('/me/feed', 'post', { message: body }, function(response) {
+      if (!response || response.error) {
+        console.log(response)
+        alert('Error occured');
+      } else {
+        alert('Post ID: ' + response.id);
+        console.log(response);
+      }
+    });
   }
 }
