@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "ss":"ng serve --ssl"
+    "ss": "ng serve --ssl"
   },
   "private": true,
   "dependencies": {
@@ -23,12 +23,10 @@
     "@angular/platform-browser-dynamic": "^4.2.4",
     "@angular/router": "^4.2.4",
     "angular-6-social-login": "^1.1.1",
-    "angularfire2": "^4.0.0-rc.2",
     "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",
-    "firebase": "^4.3.0",
     "font-awesome": "^4.7.0",
-    "node-sass": "^4.9.0",
+    "node-sass": "^4.9.2",
     "rxjs": "^5.4.2",
     "socket.io-client": "^2.1.1",
     "zone.js": "^0.8.14"

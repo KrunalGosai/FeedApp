@@ -1,7 +1,6 @@
 // Import the required packages to the service
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
-import {  FirebaseListObservable } from 'angularfire2/database';
 import "rxjs/add/operator/map";
 import 'rxjs/add/operator/toPromise';
 import { environment } from '../../environments/environment';
@@ -17,9 +16,6 @@ export class StatusesService {
 
   // Possible available reactions
   private reactions: string[] = ['like', 'love', 'dislike']
-
-  // All the statuses available
-  public statuses: FirebaseListObservable<any[]>
 
   // The maimum length and minimum length of a status
   public maxLength:number = 500
@@ -48,9 +44,9 @@ export class StatusesService {
     if ( ! this.updating()) {
       this.inProgress = true
       let payload = {text: status, like:0, dislike:0, love:0, createdAt: {".sv": "timestamp"}};
-      this.statuses.push(payload).then( snapshot => {
-        this.inProgress = false
-      })
+      // this.statuses.push(payload).then( snapshot => {
+      //   this.inProgress = false
+      // })
     }
   }
 
@@ -60,14 +56,8 @@ export class StatusesService {
       let reactions: any = {}
       let count: number = isNaN(parseInt(status[reaction])) ? 0 : parseInt(status[reaction])
       reactions[reaction] = count+1
-      this.statuses.update(status.$key, reactions)
+      // this.statuses.update(status.$key, reactions)
     }
-  }
-
-  // Method to get the recent statuses from Firebase
-  recent(amount: number): FirebaseListObservable<any[]> {
-    // return this.statuses = this.af.list('/statuses').map(arr => arr.reverse()) as FirebaseListObservable<any[]>;
-    return null;
   }
 
   // Method to check the validity of a status update

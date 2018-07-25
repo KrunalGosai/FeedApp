@@ -12,6 +12,7 @@ import { StatusesComponent } from './statuses/statuses.component';
 
 import { StatusesService } from './statuses/statuses.service';
 import { SharedService } from './services/shared/shared.service';
+import { RouterModule, Routes } from '@angular/router';
 
 //angular social tool 
 import {
@@ -20,6 +21,7 @@ import {
   FacebookLoginProvider,
   GoogleLoginProvider
 } from "angular-6-social-login";
+import { VideorecordComponent } from './videorecord/videorecord.component';
 // Configs 
 export function getAuthServiceConfigs() {
 let  config = new AuthServiceConfig(
@@ -33,8 +35,12 @@ let  config = new AuthServiceConfig(
 	        provider: new GoogleLoginProvider("341543928717-lkud8ljns0q811enoh4fieroriu07qfi.apps.googleusercontent.com")//AIzaSyCAd-hlV4mEsMJS079bIe4Vo2gQPH1DGig
         }
       ]);
-      return config;
-    }
+  return config;
+}
+const routes: Routes = [
+  { path: '', component: StatusesComponent },
+  { path: 'video', component: VideorecordComponent }
+];
 
 @NgModule({
   declarations: [
@@ -42,13 +48,15 @@ let  config = new AuthServiceConfig(
     NavComponent,
     SidebarComponent,
     StatusesComponent,
+    VideorecordComponent,
 ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
     HttpModule,
-    SocialLoginModule
+    SocialLoginModule,
+    RouterModule.forRoot(routes)
   ],
   providers: [StatusesService,SharedService,{
     provide: AuthServiceConfig,
