@@ -13,6 +13,7 @@ import { StatusesComponent } from './statuses/statuses.component';
 import { StatusesService } from './statuses/statuses.service';
 import { SharedService } from './services/shared/shared.service';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthService } from './services/auth/auth.service';
 
 //angular social tool 
 import {
@@ -39,7 +40,8 @@ let  config = new AuthServiceConfig(
 }
 const routes: Routes = [
   { path: '', component: StatusesComponent },
-  { path: 'video', component: VideorecordComponent }
+  { path: 'video', canActivate:[AuthService] ,component: VideorecordComponent },
+  { path: '**', component: StatusesComponent }
 ];
 
 @NgModule({
@@ -58,7 +60,7 @@ const routes: Routes = [
     SocialLoginModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [StatusesService,SharedService,{
+  providers: [StatusesService,SharedService,AuthService,{
     provide: AuthServiceConfig,
     useFactory: getAuthServiceConfigs
   }],

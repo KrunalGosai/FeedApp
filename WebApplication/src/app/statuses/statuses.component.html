@@ -11,7 +11,7 @@
       </span>
       <!-- On click of this button, post status -->
       <input type="file" type="file" accept="image/*" (change)="onFileChange($event)" #file style="display: none;">
-      <button class="btn btn-primary btn-sm" style="min-width: 0px;" [routerLink]="['video']"><em class="fa fa-image"></em></button>
+      <button class="btn btn-primary btn-sm" style="min-width: 0px;" [routerLink]="['video']"><em class="fa fa-video"></em></button>
       <button class="btn btn-primary btn-sm" style="min-width: 0px;" (click)="file.click()"><em class="fa fa-image"></em></button>
       <button class="btn btn-primary btn-md" [disabled]="canPostStatus != true" (click)="postStatus()">Post</button>
     </div>
